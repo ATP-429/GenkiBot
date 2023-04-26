@@ -38,7 +38,7 @@ class Scoreboard:
 	async def printLeaderboard(self):
 		s = "\nSCOREBOARD\n"
 		for user_id, score in sorted(self.scores.items(), key=lambda x: x[1], reverse=True):
-			s += f"{bot.get_user(user_id).name} : {score} lessons completed!\n"
+			s += f"{(await bot.fetch_user(user_id)).name} : {score} lessons completed!\n"
 		return s
 
 f = open("token.txt")

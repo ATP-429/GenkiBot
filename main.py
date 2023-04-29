@@ -65,13 +65,13 @@ tree = app_commands.CommandTree(bot)
 async def slash_command(interaction: discord.Interaction):
 	global scoreboard
 	await scoreboard.add(interaction.user.id)
-	await interaction.response.send_message("Congrats! "+(await scoreboard.printLeaderboard()))
+	await interaction.response.send_message("Congrats! ", embed=(await scoreboard.printLeaderboard()))
 
 @tree.command(name="sub", description="Call this command if you want to erase your doing of a Genki Chapter")
 async def slash_command(interaction: discord.Interaction):
 	global scoreboard
 	await scoreboard.sub(interaction.user.id)
-	await interaction.response.send_message("Chapter record deleted. "+(await scoreboard.printLeaderboard()))
+	await interaction.response.send_message("Chapter record deleted. ", embed=(await scoreboard.printLeaderboard()))
 
 @tree.command(name="register", description="Call this command if you want to register yourself on the scoreboard")
 async def slash_command(interaction: discord.Interaction):

@@ -1,6 +1,7 @@
 from discord import app_commands
 import discord
 import pickle
+from table2ascii import table2ascii as t2a, PresetStyle
 import os
 
 
@@ -36,14 +37,14 @@ class Scoreboard:
 		await self.saveData()
 
 	async def printLeaderboard(self):
-		embed=discord.Embed(title="SCOREBOARD", color=discord.Color.blue())
+		data = sorted(self.scores.items(), key=lambda x: x[1], reverse=True)
+		output = t2a(
+			header=["Name", "Lessons"],
+			body=[[bot.get_user(user_id).name, score] for user_id, score in sorted(self.scores.items(), key=lambda x: x[1], reverse=True)],
+			style=PresetStyle.thin_compact
+		)
+		embed=discord.Embed(title="SCOREBOARD", description=f"```{output}```", color=discord.Color.blue())
 		print(self.scores)
-		user_str, score_str = "", ""
-		for user_id, score in self.scores.items():
-			user_str += bot.get_user(user_id).name + "\n"
-			score_str += str(score)+"\n"
-		embed.add_field(name="Name", value=user_str, inline=True)
-		embed.add_field(name="Lessons", value=score_str, inline=True)
 		return embed
 
 f = open("token.txt")
